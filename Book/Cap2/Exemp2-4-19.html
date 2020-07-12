@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Exemplo Output</h1>
+    <form action="" name="formulário" method="get">
+        <p>Preço unitário do produto: R$320,00</p>
+        <p><label>Quantidade: </label><input type="text" id="qtd"></p>
+
+        <br>
+        <button onclick="calcValorTotal()" type="button">Calcular</button>
+
+        <br>
+        <p>Valor Total <output id="vtotal"></output></p>
+    </form>
+
+    <br><br>
+
+    <a href="../../index.html">Voltar</a>
+</body>
+
+<script>
+    function calcValorTotal(){
+        var qtd = document.forms['formulário']['qtd'].value;
+        console.log(qtd);
+        var valorTotal = (qtd * 320).toFixed(2);
+        document.forms['formulário']['vtotal'].value = valorTotal;
+    }
+</script>
+</html>
