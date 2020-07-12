@@ -7,7 +7,7 @@ Repositório para treinar conceitos adquiridos durante o estudo do livro
 
 :heavy_check_mark: 01 - Apresentação da HTML5
 
-:x: 02 - Novidades na HTML5
+:heavy_check_mark: 02 - Novidades na HTML5
 
 :x: 03 - Áudio e vídeo
 
