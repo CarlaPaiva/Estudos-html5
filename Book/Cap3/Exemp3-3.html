@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title>Vídeo Player</title>
+</head>
+<body>
+
+    <style>
+        .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center
+        }
+        .box {
+            width: 300px;
+            height: 300px;
+            background: #fff;
+         }
+
+         body{
+             background-color: whitesmoke;
+         }
+        #barraDeReproducao{
+            width: 640px;
+            height: 20px;
+        }
+
+        #buttons {
+            padding: 3px;
+            text-align: center;
+        }
+
+        #container-video{
+            border: 3px solid;
+            border-color: whitesmoke;
+            padding: 5px;
+            width: 643px;
+            text-align: center;
+        }
+    </style>
+    <h1>MY Tube</h1>
+<div class="container">
+    <div id="container-video">
+
+        <video id="video" controls="controls">
+            <source src="../../media/LPInvisible.mp4" type="video/mp4">
+                <p>Seu navegador não suporta exibição de vídeo</p>
+                <p>Faça <a href="../../media/LPInvisible.mp4">download do vídeo</a></p>
+        </video>
+
+        <section id='progress'>
+
+        </section>
+
+        <section id='buttons'>
+
+        </section>
+    </div>
+</div>
+
+    <br><br>
+    <a href="../../index.html">Voltar</a>
+</body>
+<script>
+    function init(){        
+        var progressBar = document.getElementById('progress');
+
+        var slideProgresso = document.createElement('progress');
+        slideProgresso.setAttribute('type', 'progress');
+        slideProgresso.setAttribute('min', '0');
+        slideProgresso.setAttribute('max', '1');
+        slideProgresso.setAttribute("value", "0");
+        slideProgresso.setAttribute('step', '0.1');
+        slideProgresso.setAttribute('id', 'barraDeReproducao');
+
+        progressBar.insertBefore(slideProgresso, video);
+
+        var btn = document.createElement('button');
+        btn.innerHTML = '&#x25B6';
+
+        var vol = document.createElement('input');
+        vol.setAttribute('type', 'range');
+        vol.setAttribute('min', '0');
+        vol.setAttribute('max', '1');
+        vol.setAttribute('step', '0.1');
+        vol.title = "Volume";
+
+        vol.addEventListener('change', function(){
+            video.volume = this.value;
+            vol.innerHTML = this.value;
+        }, false);
+
+        var secao = document.getElementById('buttons');
+        secao.insertBefore(vol, video);
+
+        var btnFF = document.createElement('button');
+        btnFF.title = "Adiantar 2x";
+        btnFF.innerHTML = ">>";
+
+        btnFF.addEventListener('click', function(){
+            if (video.playbackRate == 3){
+                video.playbackRate = 1;
+            }
+            else{
+                video.playbackRate = 3;
+            }
+        }, false);
+
+        secao.insertBefore(btnFF, vol);
+        secao.insertBefore(btn, btnFF);
+
+        
+        var btnF = document.createElement('button');
+        btnF.title = "Adiantar";
+        btnF.innerHTML = ">";
+
+        btnF.addEventListener('click', function(){
+            if (video.playbackRate == 1.5){
+                video.playbackRate = 1;
+            }
+            else{
+                video.playbackRate = 1.5;
+            }
+        }, false);
+
+        secao.insertBefore(btnF, btnFF);
+
+        var btnV = document.createElement('button');
+        btnV.title = "Retroceder";
+        btnV.innerHTML = "<";
+
+        btnV.addEventListener('click', function(){
+            video.currentTime  += -1;
+        }, false);
+
+        secao.insertBefore(btnV, btn);
+
+        var btnVV = document.createElement('button');
+        btnVV.title = "Retroceder 2x";
+        btnVV.innerHTML = "<";
+
+        btnVV.addEventListener('click', function(){
+            video.currentTime  += -3;
+        }, false);
+
+        secao.insertBefore(btnVV, btnV);
+
+
+        var video = document.getElementById('video');
+        video.removeAttribute('controls');
+        var playPause = function() {
+            if (video.paused || video.ended){
+                video.play();
+                this.innerHTML = '&#x2588; &#x2588';
+                this.title = 'Parar';
+            }
+            else{
+                video.pause();
+                this.innerHTML = '&#x25B6';
+                this.title = 'Reproduzir';
+            }
+        }
+
+        video.addEventListener('ended', function(){
+            this.innerHTML = '&#x25B6';
+            this.title = 'Reproduzir';
+        }, false);
+
+        video.addEventListener('pause', function(){
+            this.innerHTML = '&#x25B6';
+            this.title = 'Reproduzir';
+        }, false);
+
+        video.addEventListener('play', function(){
+            this.innerHTML = '&#x2588; &#x2588';
+            this.title = 'Parar';
+        }, false);
+
+        function atualizar(){
+            slideProgresso.setAttribute('max', video.duration);
+            var ct = video.currentTime;
+
+            slideProgresso.value = ct;
+
+        }
+
+        setInterval(atualizar, 300);
+
+        btn.addEventListener('click', playPause, false);
+    }
+
+    window.onload = init;
+</script>
+</html>
